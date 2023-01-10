@@ -8,7 +8,7 @@ class GetNoteUseCase (
 ) {
     suspend operator fun invoke(id: Int): QueryResult {
         return try {
-            noteRepository.deleteNote(id)
+            noteRepository.getNote(id)
             QueryResult.Success("Note 삭제 성공")
         } catch (e: Exception) {
             QueryResult.Fail(e.message.toString())
