@@ -1,7 +1,8 @@
-package com.survivalcoding.noteapp
+package com.survivalcoding.noteapp.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.survivalcoding.noteapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
