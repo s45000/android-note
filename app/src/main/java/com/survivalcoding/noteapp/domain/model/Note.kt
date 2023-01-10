@@ -1,12 +1,15 @@
 package com.survivalcoding.noteapp.domain.model
 
-import java.util.Date
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
 
+@Entity
 data class Note(
     val title: String,
     val body: String,
     val color: Int,
     val date: Date,
-    // Auto Increase
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 )
