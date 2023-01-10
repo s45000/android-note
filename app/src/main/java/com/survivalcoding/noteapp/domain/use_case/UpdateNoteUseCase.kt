@@ -8,7 +8,7 @@ import java.util.*
 class UpdateNoteUseCase(
     private val noteRepository: NoteRepository
 ) {
-    suspend operator fun invoke(id: Int, title: String, body: String, color: Int, date: Date): QueryResult {
+    suspend operator fun invoke(id: Int, title: String, body: String, color: Int, date: Long): QueryResult {
         return try {
             noteRepository.deleteNote(id)
             noteRepository.addNote(Note(title, body, color, date))

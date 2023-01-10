@@ -11,16 +11,14 @@ class GetOrderedNotesUseCase(
     private val noteRepository: NoteRepository
 ) {
     operator fun invoke(orderType: OrderType, isAscending: Boolean): Flow<List<Note>> {
-        return try {
-            noteRepository.getNotes().map { notes ->
-                when (orderType) {
-                    TITLE -> if (isAscending) notes.sortedBy { it.title } else notes.sortedByDescending { it.title }
-                    OrderType.DATE -> if (isAscending) notes.sortedBy { it.date } else notes.sortedByDescending { it.date }
-                    OrderType.COLOR -> if (isAscending) notes.sortedBy { it.color } else notes.sortedByDescending { it.color }
-                }
+
+        return noteRepository.getNotes().map { notes ->
+            when (orderType) {
+                TITLE -> if (isAscending) notes.sortedBy { it.title } else notes.sortedByDescending { it.title }
+                OrderType.DATE -> if (isAscending) notes.sortedBy { it.date } else notes.sortedByDescending { it.date }
+                OrderType.COLOR -> if (isAscending) notes.sortedBy { it.color } else notes.sortedByDescending { it.color }
             }
-        } catch (e: Exception) {
-            throw e
         }
+
     }
 }
