@@ -12,7 +12,7 @@ interface NoteDao {
     @Query("SELECT * FROM NOTE WHERE id = :id")
     suspend fun getNote(id: Int): Note
 
-    @Insert()
+    @Insert
     suspend fun addNote(note: Note)
 
     @Query("DELETE FROM NOTE WHERE id = :id")

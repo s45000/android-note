@@ -11,7 +11,7 @@ abstract class NoteDatabase : RoomDatabase() {
     abstract val noteDao: NoteDao
 
     companion object {
-        const val DATABASE_NAME = "notes_db"
+        private const val DATABASE_NAME = "notes_db"
 
         @Volatile
         private var INSTANCE: NoteDatabase? = null
