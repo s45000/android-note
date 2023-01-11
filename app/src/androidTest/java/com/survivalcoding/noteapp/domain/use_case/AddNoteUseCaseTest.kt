@@ -1,27 +1,33 @@
 package com.survivalcoding.noteapp.domain.use_case
 
-import android.content.Context
 import android.graphics.Color
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import com.survivalcoding.noteapp.data.data_source.NoteDao
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
-import com.survivalcoding.noteapp.data.repository.NoteRepositoryImpl
 import com.survivalcoding.noteapp.domain.model.Note
+import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import com.survivalcoding.noteapp.domain.util.QueryResult
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.robolectric.annotation.Config
+import javax.inject.Inject
 
+@HiltAndroidTest
+@Config(application = HiltTestApplication::class)
 class AddNoteUseCaseTest {
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
-    private lateinit var noteDao: NoteDao
-    private lateinit var noteDatabase: NoteDatabase
-    private lateinit var noteRepository: NoteRepositoryImpl
+    @Inject
+    lateinit var noteDatabase: NoteDatabase
 
-
+    @Inject
+    lateinit var noteRepository: NoteRepository
     private lateinit var addNoteUseCase: AddNoteUseCase
 
     private val noteDummy1 = Note(
@@ -34,13 +40,7 @@ class AddNoteUseCaseTest {
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        noteDatabase = Room.inMemoryDatabaseBuilder(
-            context, NoteDatabase::class.java
-        ).build()
-        noteDao = noteDatabase.noteDao
-        noteRepository = NoteRepositoryImpl(noteDao)
-
+        hiltRule.inject()
         addNoteUseCase = AddNoteUseCase(noteRepository)
     }
 
@@ -56,6 +56,6 @@ class AddNoteUseCaseTest {
         queryResult = addNoteUseCase(noteDummy1)
         assertEquals(true, queryResult is QueryResult.Fail)
 
-        // assertEquals(noteDummy1.date, noteRepository.getNote(1)?.date)
+        assertEquals(noteDummy1, noteRepository.getNote(noteDummy1.id))
     }
 }

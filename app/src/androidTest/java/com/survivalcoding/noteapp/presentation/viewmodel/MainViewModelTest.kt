@@ -1,6 +1,6 @@
 package com.survivalcoding.noteapp.presentation.viewmodel
 
-import android.graphics.Color
+import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.OrderType
@@ -17,8 +17,12 @@ import javax.inject.Inject
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 class MainViewModelTest {
+    
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var noteDatabase: NoteDatabase
 
     @Inject
     lateinit var notesUseCase: NoteUseCases
@@ -32,6 +36,7 @@ class MainViewModelTest {
 
     @After
     fun tearDown() {
+        noteDatabase.close()
     }
 
     @Test
@@ -39,13 +44,12 @@ class MainViewModelTest {
         val dummyList: MutableList<Note> = ArrayList()
         for (i in 1..10) {
             val noteDummy = Note(
-                "title ${10 - i}",
+                "title $i",
                 "body $i",
-                Color.RED + i,
-                i.toLong(),
+                i,
+                i.toLong() * 50,
                 id = i
             )
-            delay(50)
             dummyList.add(noteDummy)
             mainViewModel.add(noteDummy)
         }

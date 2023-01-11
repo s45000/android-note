@@ -1,29 +1,33 @@
 package com.survivalcoding.noteapp.data.repository
 
-import android.content.Context
 import android.graphics.Color
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.survivalcoding.noteapp.data.data_source.NoteDao
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.domain.model.Note
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.survivalcoding.noteapp.domain.repository.NoteRepository
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
+@Config(application = HiltTestApplication::class)
 class NoteRepositoryImplTest {
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
-    private lateinit var noteDao: NoteDao
-    private lateinit var noteDatabase: NoteDatabase
-    private lateinit var noteRepository: NoteRepositoryImpl
+    @Inject
+    lateinit var noteDatabase: NoteDatabase
+
+    @Inject
+    lateinit var noteRepository: NoteRepository
 
     private val noteDummy1 = Note(
         "title1",
@@ -49,13 +53,7 @@ class NoteRepositoryImplTest {
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        noteDatabase = Room.inMemoryDatabaseBuilder(
-            context, NoteDatabase::class.java
-        ).build()
-        noteDao = noteDatabase.noteDao
-        noteRepository = NoteRepositoryImpl(noteDao)
-
+        hiltRule.inject()
     }
 
     @After
@@ -64,7 +62,7 @@ class NoteRepositoryImplTest {
     }
 
     @Test
-    fun getNote() = runTest {
+    fun getNote() = runBlocking {
         noteRepository.addNote(noteDummy1)
         noteRepository.addNote(noteDummy2)
         noteRepository.addNote(noteDummy3)
@@ -80,7 +78,7 @@ class NoteRepositoryImplTest {
     }
 
     @Test
-    fun addNote() = runTest {
+    fun addNote() = runBlocking {
         var notes = noteRepository.getNotes().first()
         assertEquals(0, notes.size)
 
@@ -94,7 +92,7 @@ class NoteRepositoryImplTest {
     }
 
     @Test
-    fun deleteNote() = runTest {
+    fun deleteNote() = runBlocking {
         var notes = noteRepository.getNotes().first()
         assertEquals(0, notes.size)
 
@@ -120,7 +118,7 @@ class NoteRepositoryImplTest {
     }
 
     @Test
-    fun getNotes(): Unit = runTest {
+    fun getNotes(): Unit = runBlocking {
         noteRepository.addNote(noteDummy1)
         noteRepository.addNote(noteDummy2)
 
