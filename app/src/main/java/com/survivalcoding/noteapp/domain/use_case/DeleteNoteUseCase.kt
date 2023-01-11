@@ -9,8 +9,11 @@ class DeleteNoteUseCase(
 ) {
     suspend operator fun invoke(note: Note): QueryResult {
         return try {
-            noteRepository.deleteNote(note)
-            QueryResult.Success("Note 삭제 성공")
+            val count = noteRepository.deleteNote(note)
+            if (count == 1)
+                QueryResult.Success("Note 삭제 성공")
+            else
+                QueryResult.Fail("존재하지 않는 Note")
         } catch (e: Exception) {
             QueryResult.Fail(e.message.toString())
         }

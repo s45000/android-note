@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM NOTE WHERE id = :id")
-    suspend fun getNote(id: Int): Note
+    suspend fun getNote(id: Int): Note?
 
     @Insert
     suspend fun addNote(note: Note)
 
     @Update
-    suspend fun updateNote(note: Note)
+    suspend fun updateNote(note: Note): Int
 
     @Delete
-    suspend fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note): Int
 
     @Query("SELECT * FROM NOTE")
     fun getNotes(): Flow<List<Note>>

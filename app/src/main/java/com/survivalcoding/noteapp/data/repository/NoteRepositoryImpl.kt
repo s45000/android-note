@@ -6,7 +6,7 @@ import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
-    override suspend fun getNote(id: Int): Note {
+    override suspend fun getNote(id: Int): Note? {
         return noteDao.getNote(id)
     }
 
@@ -14,12 +14,12 @@ class NoteRepositoryImpl(private val noteDao: NoteDao) : NoteRepository {
         noteDao.addNote(note)
     }
 
-    override suspend fun deleteNote(note: Note) {
-        noteDao.deleteNote(note)
+    override suspend fun deleteNote(note: Note): Int {
+        return noteDao.deleteNote(note)
     }
 
-    override suspend fun updateNote(note: Note) {
-        noteDao.updateNote(note)
+    override suspend fun updateNote(note: Note): Int {
+        return noteDao.updateNote(note)
     }
 
     override fun getNotes(): Flow<List<Note>> {

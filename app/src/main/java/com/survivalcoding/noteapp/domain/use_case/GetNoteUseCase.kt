@@ -9,7 +9,10 @@ class GetNoteUseCase(
     suspend operator fun invoke(id: Int): QueryResult {
         return try {
             val note = noteRepository.getNote(id)
-            QueryResult.Success(note)
+            if (note != null)
+                QueryResult.Success(note)
+            else
+                QueryResult.Fail("해당 id 의 노트가 없습니다.")
         } catch (e: Exception) {
             QueryResult.Fail(e.message.toString())
         }

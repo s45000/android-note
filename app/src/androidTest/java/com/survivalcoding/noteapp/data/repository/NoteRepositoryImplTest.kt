@@ -69,13 +69,13 @@ class NoteRepositoryImplTest {
         noteRepository.addNote(noteDummy2)
         noteRepository.addNote(noteDummy3)
 
-        val note1: Note = noteRepository.getNote(1)
+        val note1: Note? = noteRepository.getNote(1)
         assertEquals(noteDummy1, note1)
 
-        val note2: Note = noteRepository.getNote(2)
+        val note2: Note? = noteRepository.getNote(2)
         assertEquals(noteDummy2, note2)
 
-        val note3: Note = noteRepository.getNote(3)
+        val note3: Note? = noteRepository.getNote(3)
         assertEquals(noteDummy3, note3)
     }
 

@@ -11,8 +11,11 @@ class UpdateNoteUseCase(
         note: Note
     ): QueryResult {
         return try {
-            noteRepository.updateNote(note)
-            QueryResult.Success("Note 변경 성공")
+            val count = noteRepository.updateNote(note)
+            if (count == 1)
+                QueryResult.Success("Note 변경 성공")
+            else
+                QueryResult.Fail("존재 하지 않는 Note 입니다")
         } catch (e: Exception) {
             QueryResult.Fail(e.message.toString())
         }
