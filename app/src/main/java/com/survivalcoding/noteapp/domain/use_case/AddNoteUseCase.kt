@@ -3,7 +3,6 @@ package com.survivalcoding.noteapp.domain.use_case
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import com.survivalcoding.noteapp.domain.util.QueryResult
-import java.util.*
 
 class AddNoteUseCase(
     private val noteRepository: NoteRepository
