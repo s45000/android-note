@@ -9,6 +9,7 @@ import app.cash.turbine.test
 import com.survivalcoding.noteapp.data.data_source.NoteDao
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.domain.model.Note
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.*
@@ -16,7 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@Suppress("OPT_IN_USAGE")
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class NoteRepositoryImplTest {
 
