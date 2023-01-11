@@ -55,5 +55,7 @@ class AddNoteUseCaseTest {
         assertEquals(true, queryResult is QueryResult.Success<*>)
         queryResult = addNoteUseCase(noteDummy1)
         assertEquals(true, queryResult is QueryResult.Fail)
+
+        // assertEquals(noteDummy1.date, noteRepository.getNote(1)?.date)
     }
 }

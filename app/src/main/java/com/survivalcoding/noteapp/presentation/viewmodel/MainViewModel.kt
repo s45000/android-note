@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,6 +43,9 @@ class MainViewModel
         val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
         val notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value
         _mainUiState.value = mainUiState.value.copy(notes = notes)
+        viewModelScope.launch {
+            println(notes.first())
+        }
     }
 
     fun delete(note: Note) {
@@ -54,7 +58,7 @@ class MainViewModel
     fun add(note: Note) {
         viewModelScope.launch {
             noteUseCases.addNoteUseCase(note)
-            load(mainUiState.value.orderType, mainUiState.value.isAscending)
+            //load(mainUiState.value.orderType, mainUiState.value.isAscending)
         }
     }
 
