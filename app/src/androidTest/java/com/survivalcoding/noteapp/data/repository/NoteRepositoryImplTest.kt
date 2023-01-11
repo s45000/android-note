@@ -9,17 +9,11 @@ import app.cash.turbine.test
 import com.survivalcoding.noteapp.data.data_source.NoteDao
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.domain.model.Note
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
-import org.junit.Assert.*
-
 import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 import org.junit.runner.RunWith
 
 @Suppress("OPT_IN_USAGE")
@@ -34,9 +28,6 @@ class NoteRepositoryImplTest {
     private val noteDummy2 =
         Note("title2", "body2", Color.GREEN, System.currentTimeMillis(), id = 2)
     private val noteDummy3 = Note("title3", "body3", Color.BLUE, System.currentTimeMillis(), id = 3)
-
-    @get: Rule
-    val dispatcherRule = TestDispatcherRule()
 
     @Before
     fun setUp() {
@@ -136,18 +127,5 @@ class NoteRepositoryImplTest {
             assertEquals(true, notes.contains(noteDummy2))
             assertEquals(true, notes.contains(noteDummy3))
         }
-    }
-}
-
-@OptIn(ExperimentalCoroutinesApi::class)
-class TestDispatcherRule(
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
-) : TestWatcher() {
-    override fun starting(description: Description) {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    override fun finished(description: Description) {
-        Dispatchers.resetMain()
     }
 }
