@@ -49,6 +49,9 @@ dependencies {
 
     kapt "androidx.room:room-testing:2.4.3"
 
+    //ViewModelScope
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
     // room
     def room_version = "2.4.3"
     implementation 'androidx.room:room-ktx:2.4.3'
