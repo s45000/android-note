@@ -5,11 +5,11 @@ import android.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.cash.turbine.test
 import com.survivalcoding.noteapp.data.data_source.NoteDao
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.domain.model.Note
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.*
@@ -25,10 +25,27 @@ class NoteRepositoryImplTest {
     private lateinit var noteDatabase: NoteDatabase
     private lateinit var noteRepository: NoteRepositoryImpl
 
-    private val noteDummy1 = Note("title1", "body1", Color.RED, System.currentTimeMillis(), id = 1)
-    private val noteDummy2 =
-        Note("title2", "body2", Color.GREEN, System.currentTimeMillis(), id = 2)
-    private val noteDummy3 = Note("title3", "body3", Color.BLUE, System.currentTimeMillis(), id = 3)
+    private val noteDummy1 = Note(
+        "title1",
+        "body1",
+        Color.RED,
+        System.currentTimeMillis(),
+        id = 1
+    )
+    private val noteDummy2 = Note(
+        "title2",
+        "body2",
+        Color.GREEN,
+        System.currentTimeMillis(),
+        id = 2
+    )
+    private val noteDummy3 = Note(
+        "title3",
+        "body3",
+        Color.BLUE,
+        System.currentTimeMillis(),
+        id = 3
+    )
 
     @Before
     fun setUp() {
@@ -64,47 +81,42 @@ class NoteRepositoryImplTest {
 
     @Test
     fun addNote() = runTest {
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(0, notes.size)
-        }
+        var notes = noteRepository.getNotes().first()
+        assertEquals(0, notes.size)
 
         noteRepository.addNote(noteDummy1)
         noteRepository.addNote(noteDummy2)
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(2, notes.size)
-            assertEquals(true, notes.contains(noteDummy1))
-            assertEquals(true, notes.contains(noteDummy2))
-        }
+
+        notes = noteRepository.getNotes().first()
+        assertEquals(2, notes.size)
+        assertEquals(true, notes.contains(noteDummy1))
+        assertEquals(true, notes.contains(noteDummy2))
     }
 
     @Test
     fun deleteNote() = runTest {
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(0, notes.size)
-        }
+        var notes = noteRepository.getNotes().first()
+        assertEquals(0, notes.size)
+
         noteRepository.addNote(noteDummy1)
         noteRepository.addNote(noteDummy2)
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(2, notes.size)
-        }
-        noteRepository.deleteNote(1)
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(1, notes.size)
-            assertEquals(false, notes.contains(noteDummy1))
-            assertEquals(true, notes.contains(noteDummy2))
-        }
-        noteRepository.deleteNote(2)
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(0, notes.size)
-            assertEquals(false, notes.contains(noteDummy1))
-            assertEquals(false, notes.contains(noteDummy2))
-        }
+
+        notes = noteRepository.getNotes().first()
+        assertEquals(2, notes.size)
+
+        noteRepository.deleteNote(noteDummy1)
+
+        notes = noteRepository.getNotes().first()
+        assertEquals(1, notes.size)
+        assertEquals(false, notes.contains(noteDummy1))
+        assertEquals(true, notes.contains(noteDummy2))
+
+
+        noteRepository.deleteNote(noteDummy2)
+        notes = noteRepository.getNotes().first()
+        assertEquals(0, notes.size)
+        assertEquals(false, notes.contains(noteDummy1))
+        assertEquals(false, notes.contains(noteDummy2))
     }
 
     @Test
@@ -112,21 +124,17 @@ class NoteRepositoryImplTest {
         noteRepository.addNote(noteDummy1)
         noteRepository.addNote(noteDummy2)
 
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(2, notes.size)
-            assertEquals(true, notes.contains(noteDummy1))
-            assertEquals(true, notes.contains(noteDummy2))
-            assertEquals(false, notes.contains(noteDummy3))
-        }
+        var notes = noteRepository.getNotes().first()
+        assertEquals(2, notes.size)
+        assertEquals(true, notes.contains(noteDummy1))
+        assertEquals(true, notes.contains(noteDummy2))
+        assertEquals(false, notes.contains(noteDummy3))
 
         noteRepository.addNote(noteDummy3)
-        noteRepository.getNotes().test {
-            val notes = awaitItem()
-            assertEquals(3, notes.size)
-            assertEquals(true, notes.contains(noteDummy1))
-            assertEquals(true, notes.contains(noteDummy2))
-            assertEquals(true, notes.contains(noteDummy3))
-        }
+        notes = noteRepository.getNotes().first()
+        assertEquals(3, notes.size)
+        assertEquals(true, notes.contains(noteDummy1))
+        assertEquals(true, notes.contains(noteDummy2))
+        assertEquals(true, notes.contains(noteDummy3))
     }
 }

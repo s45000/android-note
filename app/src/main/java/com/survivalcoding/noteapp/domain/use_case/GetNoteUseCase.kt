@@ -8,8 +8,8 @@ class GetNoteUseCase(
 ) {
     suspend operator fun invoke(id: Int): QueryResult {
         return try {
-            noteRepository.getNote(id)
-            QueryResult.Success("Note 획득 성공") //TODO 반환값
+            val note = noteRepository.getNote(id)
+            QueryResult.Success(note)
         } catch (e: Exception) {
             QueryResult.Fail(e.message.toString())
         }
