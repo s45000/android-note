@@ -52,7 +52,7 @@ class AddNoteUseCaseTest {
     @Test
     operator fun invoke() = runBlocking {
         var queryResult = addNoteUseCase(noteDummy1)
-        assertEquals(true, queryResult is QueryResult.Success<*>)
+        assertEquals(true, queryResult is QueryResult.Success)
         queryResult = addNoteUseCase(noteDummy1)
         assertEquals(true, queryResult is QueryResult.Fail)
 

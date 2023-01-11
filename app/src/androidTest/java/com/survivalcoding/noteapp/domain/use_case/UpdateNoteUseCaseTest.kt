@@ -58,7 +58,7 @@ class UpdateNoteUseCaseTest {
 
         noteRepository.addNote(noteDummy1)
         queryResult = updateNoteUseCase(noteDummy1)
-        assertEquals(true, queryResult is QueryResult.Success<*>)
+        assertEquals(true, queryResult is QueryResult.Success)
 
         val noteDummy2 = noteDummy1.copy(
             title = "changeTile",

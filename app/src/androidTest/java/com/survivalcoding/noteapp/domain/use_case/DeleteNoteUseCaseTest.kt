@@ -56,6 +56,6 @@ class DeleteNoteUseCaseTest {
 
         noteRepository.addNote(noteDummy1)
         queryResult = deleteNoteUseCase(noteDummy1)
-        assertEquals(true, queryResult is QueryResult.Success<*>)
+        assertEquals(true, queryResult is QueryResult.Success)
     }
 }

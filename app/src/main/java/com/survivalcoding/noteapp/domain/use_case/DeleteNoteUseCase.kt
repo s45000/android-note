@@ -7,7 +7,7 @@ import com.survivalcoding.noteapp.domain.util.QueryResult
 class DeleteNoteUseCase(
     private val noteRepository: NoteRepository
 ) {
-    suspend operator fun invoke(note: Note): QueryResult {
+    suspend operator fun invoke(note: Note): QueryResult<String> {
         return try {
             val count = noteRepository.deleteNote(note)
             if (count == 1)

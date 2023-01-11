@@ -9,7 +9,7 @@ class UpdateNoteUseCase(
 ) {
     suspend operator fun invoke(
         note: Note
-    ): QueryResult {
+    ): QueryResult<String> {
         return try {
             val count = noteRepository.updateNote(note)
             if (count == 1)

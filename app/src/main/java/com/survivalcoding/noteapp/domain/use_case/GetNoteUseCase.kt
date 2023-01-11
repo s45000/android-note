@@ -1,12 +1,13 @@
 package com.survivalcoding.noteapp.domain.use_case
 
+import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import com.survivalcoding.noteapp.domain.util.QueryResult
 
 class GetNoteUseCase(
     private val noteRepository: NoteRepository
 ) {
-    suspend operator fun invoke(id: Int): QueryResult {
+    suspend operator fun invoke(id: Int): QueryResult<Note> {
         return try {
             val note = noteRepository.getNote(id)
             if (note != null)

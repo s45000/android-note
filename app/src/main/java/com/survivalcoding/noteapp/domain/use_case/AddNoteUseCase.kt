@@ -7,7 +7,7 @@ import com.survivalcoding.noteapp.domain.util.QueryResult
 class AddNoteUseCase(
     private val noteRepository: NoteRepository
 ) {
-    suspend operator fun invoke(note: Note): QueryResult {
+    suspend operator fun invoke(note: Note): QueryResult<String> {
         return try {
             noteRepository.addNote(note)
             QueryResult.Success("Note 생성 성공")

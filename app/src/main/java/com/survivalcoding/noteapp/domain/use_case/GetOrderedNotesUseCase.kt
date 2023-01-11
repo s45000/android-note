@@ -1,8 +1,10 @@
 package com.survivalcoding.noteapp.domain.use_case
 
+import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import com.survivalcoding.noteapp.domain.util.OrderType
 import com.survivalcoding.noteapp.domain.util.QueryResult
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GetOrderedNotesUseCase(
@@ -11,7 +13,7 @@ class GetOrderedNotesUseCase(
     operator fun invoke(
         orderType: OrderType,
         isAscending: Boolean
-    ): QueryResult {
+    ): QueryResult<Flow<List<Note>>> {
         try {
             val notes = noteRepository.getNotes().map { notes ->
                 when (orderType) {

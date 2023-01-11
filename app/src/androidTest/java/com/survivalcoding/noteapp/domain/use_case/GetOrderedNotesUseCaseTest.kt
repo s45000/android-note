@@ -10,7 +10,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -49,7 +48,7 @@ class GetOrderedNotesUseCaseTest {
     @Test
     operator fun invoke() = runBlocking {
         var queryResult = getOrderedNotesUseCase(OrderType.TITLE, true)
-        var notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        var notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(emptyList<Note>(), notes)
 
         val dummyList: MutableList<Note> = ArrayList()
@@ -67,32 +66,32 @@ class GetOrderedNotesUseCaseTest {
         }
         queryResult = getOrderedNotesUseCase(OrderType.TITLE, true)
         dummyList.sortBy { it.title }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
 
         queryResult = getOrderedNotesUseCase(OrderType.TITLE, false)
         dummyList.sortByDescending { it.title }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
 
         queryResult = getOrderedNotesUseCase(OrderType.DATE, true)
         dummyList.sortBy { it.date }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
 
         queryResult = getOrderedNotesUseCase(OrderType.DATE, false)
         dummyList.sortByDescending { it.date }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
 
         queryResult = getOrderedNotesUseCase(OrderType.COLOR, true)
         dummyList.sortBy { it.color }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
 
         queryResult = getOrderedNotesUseCase(OrderType.COLOR, false)
         dummyList.sortByDescending { it.color }
-        notes = (queryResult as QueryResult.Success<Flow<List<Note>>>).value.first()
+        notes = (queryResult as QueryResult.Success).value.first()
         assertEquals(dummyList, notes)
     }
 }

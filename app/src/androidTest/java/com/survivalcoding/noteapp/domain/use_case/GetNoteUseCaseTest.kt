@@ -54,7 +54,7 @@ class GetNoteUseCaseTest {
 
         noteRepository.addNote(noteDummy1)
         queryResult = getNoteUseCase(noteDummy1.id)
-        Assert.assertEquals(noteDummy1, (queryResult as QueryResult.Success<*>).value)
+        Assert.assertEquals(noteDummy1, (queryResult as QueryResult.Success).value)
 
 
     }
