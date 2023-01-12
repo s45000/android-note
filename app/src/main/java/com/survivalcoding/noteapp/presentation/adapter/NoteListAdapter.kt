@@ -36,4 +36,6 @@ class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallba
         holder.binding.body.text = getItem(position).body
         holder.binding.root.setBackgroundColor(getItem(position).color)
     }
+
+
 }

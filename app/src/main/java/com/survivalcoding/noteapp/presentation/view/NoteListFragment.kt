@@ -1,6 +1,7 @@
 package com.survivalcoding.noteapp.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentNoteListBinding
-import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.presentation.adapter.NoteListAdapter
 import com.survivalcoding.noteapp.presentation.viewmodel.NoteListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,24 +33,25 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
 
-        val noteListAdapter = NoteListAdapter()
-        val noteListRecyclerView = binding.noteListRecyclerview
 
-        noteListRecyclerView.adapter = noteListAdapter
-        noteListRecyclerView.layoutManager = LinearLayoutManager(view?.context)
-        noteListRecyclerView.setHasFixedSize(true)
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val noteListAdapter = NoteListAdapter()
+        val noteListRecyclerView = binding.noteListRecyclerview
+
+        noteListRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        noteListRecyclerView.adapter = noteListAdapter
+        noteListRecyclerView.setHasFixedSize(true)
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.noteListUiState.collectLatest {
-                    ((binding.noteListRecyclerview.adapter) as ListAdapter<Note, NoteListAdapter.ViewHolder>)
-                        .submitList(it.notes.toMutableList())
+                    Log.d("notes", it.notes[0].toString())
+                    noteListAdapter.submitList(it.notes.toMutableList())
                 }
             }
         }
