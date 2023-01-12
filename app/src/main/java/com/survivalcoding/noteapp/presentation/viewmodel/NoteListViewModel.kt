@@ -1,12 +1,12 @@
 package com.survivalcoding.noteapp.presentation.viewmodel
 
+import android.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.survivalcoding.noteapp.Config
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.OrderType
-import com.survivalcoding.noteapp.domain.util.QueryResult
 import com.survivalcoding.noteapp.presentation.ui_state.NoteListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,27 +19,34 @@ class NoteListViewModel
 @Inject constructor(
     private val noteUseCases: NoteUseCases
 ) : ViewModel() {
-    private val _noteListUiState: MutableStateFlow<NoteListUiState> by lazy {
-        val queryResult = noteUseCases.getOrderedNotesUseCase(
-            Config.DEFAULT_ORDER_TYPE,
-            Config.DEFAULT_IS_ASCENDING
-        )
-        val notes = (queryResult as QueryResult.Success).value
+    private val _noteListUiState: MutableStateFlow<NoteListUiState> =
         MutableStateFlow(
             NoteListUiState(
-                notes,
-                Config.DEFAULT_ORDER_TYPE,
-                Config.DEFAULT_IS_ASCENDING
+                emptyList(), Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING
             )
         )
+
+
+    init {
+        load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
     }
 
     val noteListUiState = _noteListUiState.asStateFlow()
 
     fun load(orderType: OrderType, isAscending: Boolean) {
-        val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
-        val notes = (queryResult as QueryResult.Success).value
-        _noteListUiState.value = noteListUiState.value.copy(notes = notes)
+//        val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
+//        val notes = (queryResult as QueryResult.Success).value.onEach {
+//            _noteListUiState.value = noteListUiState.value.copy(notes = it)
+//        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            _noteListUiState.value = noteListUiState.value.copy(
+                notes = listOf(
+                    Note("test", "test", Color.RED, System.currentTimeMillis(), 0),
+                    Note("test", "test", Color.BLUE, System.currentTimeMillis(), 1),
+                    Note("test", "test", Color.GREEN, System.currentTimeMillis(), 2)
+                )
+            )
+        }
     }
 
     fun delete(note: Note) {
