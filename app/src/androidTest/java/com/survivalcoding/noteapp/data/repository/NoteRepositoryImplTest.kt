@@ -135,4 +135,18 @@ class NoteRepositoryImplTest {
         assertEquals(true, notes.contains(noteDummy2))
         assertEquals(true, notes.contains(noteDummy3))
     }
+
+    @Test
+    fun updateNote(): Unit = runBlocking {
+        noteRepository.addNote(noteDummy1)
+        noteRepository.addNote(noteDummy2)
+        
+        val noteDummy4 = noteDummy2.copy(
+            title = "change"
+        )
+
+
+        assertEquals(1, noteRepository.updateNote(noteDummy4))
+        assertEquals(noteDummy4, noteRepository.getNote(noteDummy2.id))
+    }
 }

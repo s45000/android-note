@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 class MainViewModelTest {
-    
+
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
@@ -53,6 +53,7 @@ class MainViewModelTest {
             dummyList.add(noteDummy)
             mainViewModel.add(noteDummy)
         }
+
         mainViewModel.load(OrderType.TITLE, true)
         delay(3000)
 

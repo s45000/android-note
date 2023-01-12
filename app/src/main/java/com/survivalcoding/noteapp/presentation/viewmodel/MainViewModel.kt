@@ -54,7 +54,7 @@ class MainViewModel
     fun add(note: Note) {
         viewModelScope.launch {
             noteUseCases.addNoteUseCase(note)
-            //load(mainUiState.value.orderType, mainUiState.value.isAscending)
+            load(mainUiState.value.orderType, mainUiState.value.isAscending)
         }
     }
 
