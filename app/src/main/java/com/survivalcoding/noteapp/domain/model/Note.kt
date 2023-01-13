@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Note(
     val title: String = "",
     val body: String = "",
-    val color: Int = 0,
+    val color: NoteColor = NoteColor.BabyBlue,
     val date: Long = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

@@ -1,10 +1,10 @@
 package com.survivalcoding.noteapp.presentation.viewmodel
 
-import android.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.survivalcoding.noteapp.Config
 import com.survivalcoding.noteapp.domain.model.Note
+import com.survivalcoding.noteapp.domain.model.NoteColor
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.OrderType
 import com.survivalcoding.noteapp.presentation.ui_state.NoteListUiState
@@ -41,9 +41,9 @@ class NoteListViewModel
         viewModelScope.launch {
             _noteListUiState.value = noteListUiState.value.copy(
                 notes = listOf(
-                    Note("test", "test", Color.RED, System.currentTimeMillis(), 0),
-                    Note("test", "test", Color.BLUE, System.currentTimeMillis(), 1),
-                    Note("test", "test", Color.GREEN, System.currentTimeMillis(), 2)
+                    Note("test", "test", NoteColor.BabyBlue, System.currentTimeMillis(), 0),
+                    Note("test", "test", NoteColor.RedPink, System.currentTimeMillis(), 1),
+                    Note("test", "test", NoteColor.RedOrange, System.currentTimeMillis(), 2)
                 )
             )
         }

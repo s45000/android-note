@@ -1,7 +1,6 @@
 package com.survivalcoding.noteapp.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -49,7 +47,6 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.noteListUiState.collectLatest {
-                    Log.d("notes", it.notes[0].toString())
                     noteListAdapter.submitList(it.notes.toMutableList())
                 }
             }

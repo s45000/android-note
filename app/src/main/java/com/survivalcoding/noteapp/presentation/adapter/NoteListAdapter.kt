@@ -2,12 +2,14 @@ package com.survivalcoding.noteapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.NoteItemBinding
 import com.survivalcoding.noteapp.domain.model.Note
+import com.survivalcoding.noteapp.domain.model.NoteColor
 
 class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallback) {
 
@@ -34,8 +36,17 @@ class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallba
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.title.text = getItem(position).title
         holder.binding.body.text = getItem(position).body
-        holder.binding.root.setBackgroundColor(getItem(position).color)
+
+        val resources = holder.binding.root.resources
+        val drawable =
+            when (getItem(position).color) {
+                NoteColor.RedOrange -> R.drawable.item_background_red_orange
+                NoteColor.RedPink -> R.drawable.item_background_red_pink
+                NoteColor.BabyBlue -> R.drawable.item_background_baby_blue
+                NoteColor.Violet -> R.drawable.item_background_violet
+                NoteColor.LightGreen -> R.drawable.item_background_light_green
+            }
+        holder.binding.itemBackground.background =
+            ResourcesCompat.getDrawable(resources, drawable, null)
     }
-
-
 }

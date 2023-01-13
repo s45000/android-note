@@ -2,6 +2,7 @@ package com.survivalcoding.noteapp
 
 import android.app.Application
 import androidx.room.Room
+import com.survivalcoding.noteapp.data.converter.ColorConverter
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.data.repository.NoteRepositoryImpl
 import com.survivalcoding.noteapp.domain.repository.NoteRepository
@@ -23,7 +24,8 @@ object NoteAppModule {
             app,
             NoteDatabase::class.java,
             NoteDatabase.DATABASE_NAME
-        ).build()
+        ).addTypeConverter(ColorConverter())
+            .build()
     }
 
     @Provides
