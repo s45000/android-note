@@ -115,5 +115,20 @@
             app:layout_constraintTop_toBottomOf="@+id/setting_layout"
             tools:listitem="@layout/note_item" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/note_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foregroundTint="@color/black"
+            android:src="@drawable/baseline_add_24"
+            app:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="add button"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

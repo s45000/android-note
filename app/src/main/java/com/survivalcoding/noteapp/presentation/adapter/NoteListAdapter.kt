@@ -11,7 +11,8 @@ import com.survivalcoding.noteapp.databinding.NoteItemBinding
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.model.NoteColor
 
-class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallback) {
+class NoteListAdapter(private val listener: (Note) -> Unit) :
+    ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallback) {
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Note>() {
@@ -30,6 +31,7 @@ class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallba
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.note_item, parent, false)
+
         return ViewHolder(NoteItemBinding.bind(view))
     }
 
@@ -48,5 +50,9 @@ class NoteListAdapter : ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallba
             }
         holder.binding.itemBackground.background =
             ResourcesCompat.getDrawable(resources, drawable, null)
+
+        holder.binding.deleteButton.setOnClickListener {
+            listener(getItem(position))
+        }
     }
 }

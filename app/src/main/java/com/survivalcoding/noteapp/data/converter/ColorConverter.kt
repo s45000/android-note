@@ -7,12 +7,12 @@ import com.survivalcoding.noteapp.domain.model.NoteColor
 @ProvidedTypeConverter
 class ColorConverter {
     @TypeConverter
-    fun longToNoteColor(value: Long?): NoteColor? {
-        return NoteColor.values().firstOrNull { it.rgb == value }
+    fun longToNoteColor(value: Long): NoteColor {
+        return NoteColor.values().firstOrNull { it.rgb == value } ?: NoteColor.RedOrange
     }
 
     @TypeConverter
-    fun noteColorToLong(value: NoteColor?): Long? {
-        return value?.rgb
+    fun noteColorToLong(value: NoteColor): Long {
+        return value.rgb
     }
 }
