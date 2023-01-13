@@ -25,13 +25,17 @@ class NoteListViewModel
                 emptyList(), Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING
             )
         )
-
+    private val _menuToggleUiState: MutableStateFlow<Boolean> =
+        MutableStateFlow(
+            false
+        )
 
     init {
         load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
     }
 
     val noteListUiState = _noteListUiState.asStateFlow()
+    val menuToggleUiState = _menuToggleUiState.asStateFlow()
 
     fun load(orderType: OrderType, isAscending: Boolean) {
 //        val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
@@ -41,10 +45,34 @@ class NoteListViewModel
         viewModelScope.launch {
             _noteListUiState.value = noteListUiState.value.copy(
                 notes = listOf(
-                    Note("test", "test", NoteColor.BabyBlue, System.currentTimeMillis(), 0),
-                    Note("test", "test", NoteColor.RedPink, System.currentTimeMillis(), 1),
-                    Note("test", "test", NoteColor.RedOrange, System.currentTimeMillis(), 2)
-                )
+                    Note("test1", "test", NoteColor.BabyBlue, 1, 0),
+                    Note("test2", "test", NoteColor.RedPink, 3, 1),
+                    Note("test3", "test", NoteColor.RedOrange, 2, 2)
+                ).let { notes ->
+                    when (orderType) {
+                        OrderType.TITLE -> {
+                            if (isAscending) {
+                                notes.sortedBy { it.title }
+                            } else {
+                                notes.sortedByDescending { it.title }
+                            }
+                        }
+                        OrderType.DATE -> {
+                            if (isAscending) {
+                                notes.sortedBy { it.date }
+                            } else {
+                                notes.sortedByDescending { it.date }
+                            }
+                        }
+                        OrderType.COLOR -> {
+                            if (isAscending) {
+                                notes.sortedBy { it.color }
+                            } else {
+                                notes.sortedByDescending { it.color }
+                            }
+                        }
+                    }
+                }
             )
         }
     }
@@ -64,5 +92,9 @@ class NoteListViewModel
     fun changeIsAscending(isAscending: Boolean) {
         _noteListUiState.value = noteListUiState.value.copy(isAscending = isAscending)
         load(noteListUiState.value.orderType, noteListUiState.value.isAscending)
+    }
+
+    fun menuSelectToggle() {
+        _menuToggleUiState.value = !menuToggleUiState.value
     }
 }
