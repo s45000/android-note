@@ -33,8 +33,7 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
     ): View? {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
 
-
-        return _binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
