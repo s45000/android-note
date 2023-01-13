@@ -13,13 +13,14 @@
         android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:id="@+id/setting_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layoutDescription="@xml/fragment_note_list_scene"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -101,7 +102,7 @@
 
             </RadioGroup>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/note_list_recyclerview"

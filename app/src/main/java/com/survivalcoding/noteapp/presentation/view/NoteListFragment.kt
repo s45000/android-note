@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -57,8 +56,11 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.menuToggleUiState.collectLatest {
-                    binding.isAscendingGroup.isVisible = it
-                    binding.orderTypeGroup.isVisible = it
+                    if (it) {
+                        binding.settingLayout.transitionToEnd()
+                    } else {
+                        binding.settingLayout.transitionToStart()
+                    }
                 }
             }
         }
