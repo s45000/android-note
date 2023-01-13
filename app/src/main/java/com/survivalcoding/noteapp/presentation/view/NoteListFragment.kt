@@ -41,7 +41,11 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val noteListAdapter = NoteListAdapter(listener = { note: Note -> viewModel.delete(note) })
+        val noteListAdapter =
+            NoteListAdapter(
+                noteDeleteCallback = { note: Note -> viewModel.delete(note) }
+            )
+
         val noteListRecyclerView = binding.noteListRecyclerview
 
         noteListRecyclerView.layoutManager = LinearLayoutManager(view.context)

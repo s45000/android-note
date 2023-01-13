@@ -34,6 +34,7 @@ class NoteListViewModel
 
     init {
         load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
+
     }
 
     val noteListUiState = _noteListUiState.asStateFlow()
@@ -41,7 +42,7 @@ class NoteListViewModel
 
     fun load(orderType: OrderType, isAscending: Boolean) {
         val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
-        val notes = (queryResult as QueryResult.Success).value.onEach {
+        (queryResult as QueryResult.Success).value.onEach {
             _noteListUiState.value = noteListUiState.value.copy(notes = it)
         }.launchIn(viewModelScope)
     }

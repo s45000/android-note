@@ -11,7 +11,9 @@ import com.survivalcoding.noteapp.databinding.NoteItemBinding
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.model.NoteColor
 
-class NoteListAdapter(private val listener: (Note) -> Unit) :
+class NoteListAdapter(
+    private val noteDeleteCallback: (Note) -> Unit
+) :
     ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallback) {
 
     companion object {
@@ -52,7 +54,7 @@ class NoteListAdapter(private val listener: (Note) -> Unit) :
             ResourcesCompat.getDrawable(resources, drawable, null)
 
         holder.binding.deleteButton.setOnClickListener {
-            listener(getItem(position))
+            noteDeleteCallback(getItem(position))
         }
     }
 }
