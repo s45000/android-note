@@ -1,5 +1,6 @@
 package com.survivalcoding.noteapp.presentation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.survivalcoding.noteapp.domain.model.Note
@@ -11,8 +12,13 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateNoteViewModel
 @Inject constructor(
-    private val noteUseCases: NoteUseCases
+    private val noteUseCases: NoteUseCases,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    init {
+        println("here: " + savedStateHandle["noteId"])
+    }
 
     fun update(note: Note) {
         viewModelScope.launch {

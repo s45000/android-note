@@ -12,7 +12,8 @@ import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.model.NoteColor
 
 class NoteListAdapter(
-    private val noteDeleteCallback: (Note) -> Unit
+    private val noteDeleteCallback: (Note) -> Unit,
+    private val noteSelectCallback: (Note) -> Unit,
 ) :
     ListAdapter<Note, NoteListAdapter.ViewHolder>(diffCallback) {
 
@@ -50,11 +51,17 @@ class NoteListAdapter(
                 NoteColor.Violet -> R.drawable.item_background_violet
                 NoteColor.LightGreen -> R.drawable.item_background_light_green
             }
+
+        val note = getItem(position)
         holder.binding.itemBackground.background =
             ResourcesCompat.getDrawable(resources, drawable, null)
 
         holder.binding.deleteButton.setOnClickListener {
-            noteDeleteCallback(getItem(position))
+            noteDeleteCallback(note)
+        }
+
+        holder.binding.root.setOnClickListener {
+            noteSelectCallback(note)
         }
     }
 }

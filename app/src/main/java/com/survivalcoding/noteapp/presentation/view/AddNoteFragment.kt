@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentAddNoteBinding
 import com.survivalcoding.noteapp.domain.model.NoteColor
+import com.survivalcoding.noteapp.presentation.view.nav.NoteNav
 import com.survivalcoding.noteapp.presentation.viewmodel.AddNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,10 +54,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
                 resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
             )
 
-            parentFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<NoteListFragment>(R.id.main_fragment_container)
-            }
+            findNavController().navigate(NoteNav.NoteList.route)
         }
     }
 

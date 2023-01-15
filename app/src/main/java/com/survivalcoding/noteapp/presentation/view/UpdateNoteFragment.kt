@@ -27,6 +27,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.apply { }
     }
 
 
