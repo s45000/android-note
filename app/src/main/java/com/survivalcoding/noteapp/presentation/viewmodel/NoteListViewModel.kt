@@ -48,7 +48,6 @@ class NoteListViewModel
         val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
         loadJob = (queryResult as QueryResult.Success).value.onEach {
             _noteListUiState.value = noteListUiState.value.copy(notes = it)
-            loadJob = null
         }.launchIn(viewModelScope)
     }
 
