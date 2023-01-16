@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentAddNoteBinding
 import com.survivalcoding.noteapp.domain.model.NoteColor
-import com.survivalcoding.noteapp.presentation.view.nav.NoteNav
 import com.survivalcoding.noteapp.presentation.viewmodel.AddNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,8 +52,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
                 binding.bodyEditTextView.text.toString(),
                 resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
             )
-
-            findNavController().navigate(NoteNav.NoteList.route)
+            findNavController().popBackStack()
         }
     }
 
