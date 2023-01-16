@@ -9,6 +9,7 @@ import com.survivalcoding.noteapp.domain.util.OrderType
 import com.survivalcoding.noteapp.domain.util.QueryResult
 import com.survivalcoding.noteapp.presentation.ui_state.NoteListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -32,17 +33,19 @@ class NoteListViewModel
             false
         )
 
-    init {
-        load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
-
-    }
+//    init {
+//        load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
+//    }
 
     val noteListUiState = _noteListUiState.asStateFlow()
     val menuToggleUiState = _menuToggleUiState.asStateFlow()
 
+    private var loadJob: Job? = null
     fun load(orderType: OrderType, isAscending: Boolean) {
+        loadJob?.cancel()
+
         val queryResult = noteUseCases.getOrderedNotesUseCase(orderType, isAscending)
-        (queryResult as QueryResult.Success).value.onEach {
+        loadJob = (queryResult as QueryResult.Success).value.onEach {
             _noteListUiState.value = noteListUiState.value.copy(notes = it)
         }.launchIn(viewModelScope)
     }

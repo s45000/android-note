@@ -4,8 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.survivalcoding.noteapp.domain.model.Note
+import com.survivalcoding.noteapp.domain.model.NoteColor
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
+import com.survivalcoding.noteapp.domain.util.QueryResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,13 +21,35 @@ class UpdateNoteViewModel
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+
+    private val _noteState = MutableStateFlow(Note())
+    val noteState: StateFlow<Note> = _noteState.asStateFlow()
+
     init {
-        println("here: " + savedStateHandle["noteId"])
+        savedStateHandle.get<Int>("noteId")?.let { noteId ->
+            viewModelScope.launch {
+                when (val queryResult = noteUseCases.getNoteUseCase(noteId)) {
+                    is QueryResult.Fail -> TODO()
+                    is QueryResult.Success -> {
+                        val note = queryResult.value
+                        _noteState.value = note
+                    }
+                }
+            }
+        }
+
     }
 
-    fun update(note: Note) {
+    fun update(title: String, body: String, color: Long) {
         viewModelScope.launch {
-            noteUseCases.updateNoteUseCase(note)
+            noteUseCases.updateNoteUseCase(
+                noteState.value.copy(
+                    title = title,
+                    body = body,
+                    color = NoteColor.fromLong(color),
+                    date = System.currentTimeMillis()
+                )
+            )
         }
     }
 }

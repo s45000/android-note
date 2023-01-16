@@ -101,4 +101,12 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.load(
+            viewModel.noteListUiState.value.orderType,
+            viewModel.noteListUiState.value.isAscending
+        )
+    }
+
 }
