@@ -68,12 +68,14 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         }
 
         binding.saveNoteButton.setOnClickListener {
-            viewModel.update(
-                binding.titleEditTextView.text.toString(),
-                binding.bodyEditTextView.text.toString(),
-                resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
-            )
-            findNavController().popBackStack()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.update(
+                    binding.titleEditTextView.text.toString(),
+                    binding.bodyEditTextView.text.toString(),
+                    resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
+                )
+                findNavController().popBackStack()
+            }
         }
     }
 

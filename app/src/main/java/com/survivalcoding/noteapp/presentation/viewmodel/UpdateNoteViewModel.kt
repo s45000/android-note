@@ -37,7 +37,6 @@ class UpdateNoteViewModel
                 }
             }
         }
-
     }
 
     fun tempSave(title: String, body: String, color: Long) {
@@ -48,21 +47,15 @@ class UpdateNoteViewModel
         )
     }
 
-    fun update(title: String, body: String, color: Long) {
+    suspend fun update(title: String, body: String, color: Long) {
         println("update : ${noteState.value.id} $title $body $color")
-        viewModelScope.launch {
-            val ql = noteUseCases.updateNoteUseCase(
-                noteState.value.copy(
-                    title = title,
-                    body = body,
-                    color = NoteColor.fromLong(color),
-                    date = System.currentTimeMillis()
-                )
+        val ql = noteUseCases.updateNoteUseCase(
+            noteState.value.copy(
+                title = title,
+                body = body,
+                color = NoteColor.fromLong(color),
+                date = System.currentTimeMillis()
             )
-            when (ql) {
-                is QueryResult.Fail -> println(ql.msg)
-                is QueryResult.Success -> println(ql.value)
-            }
-        }
+        )
     }
 }
