@@ -10,10 +10,7 @@ import com.survivalcoding.noteapp.domain.util.QueryResult
 import com.survivalcoding.noteapp.presentation.ui_state.NoteListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,14 +26,16 @@ class NoteListViewModel
             )
         )
 
+    private val _snackBarEvent = MutableSharedFlow<String>()
+    val snackBarEvent = _snackBarEvent.asSharedFlow()
+
+    private var deletedNote: Note? = null
+
     private val _menuToggleUiState: MutableStateFlow<Boolean> =
         MutableStateFlow(
             false
         )
 
-//    init {
-//        load(Config.DEFAULT_ORDER_TYPE, Config.DEFAULT_IS_ASCENDING)
-//    }
 
     val noteListUiState = _noteListUiState.asStateFlow()
     val menuToggleUiState = _menuToggleUiState.asStateFlow()
@@ -55,6 +54,17 @@ class NoteListViewModel
         viewModelScope.launch {
             noteUseCases.deleteNoteUseCase(note)
             load(noteListUiState.value.orderType, noteListUiState.value.isAscending)
+            deletedNote = note
+            _snackBarEvent.emit("Note deleted")
+        }
+    }
+
+    fun undo() {
+        deletedNote?.let {
+            viewModelScope.launch {
+                noteUseCases.addNoteUseCase(it)
+                deletedNote = null
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentNoteListBinding
 import com.survivalcoding.noteapp.domain.model.Note
@@ -75,6 +76,22 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.snackBarEvent.collectLatest {
+                    Snackbar.make(
+                        binding.root,
+                        it,
+                        Snackbar.LENGTH_SHORT
+                    ).setAction("Undo") {
+                        viewModel.undo()
+                    }.show()
+                }
+            }
+        }
+
+
         binding.menuButton.setOnClickListener {
             viewModel.menuSelectToggle()
         }

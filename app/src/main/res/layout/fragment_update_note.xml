@@ -5,115 +5,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/RedOrange"
-    tools:context=".presentation.view.AddNoteFragment">
+    tools:context=".presentation.view.UpdateNoteFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/update_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RadioGroup
-            android:id="@+id/color_radio_group"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/update_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-
-            <RadioButton
-                android:id="@+id/red_orange_radio"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/color_radio_group"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/color_radio_selector_red_orange"
-                android:button="@null"
-                android:checked="true" />
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:id="@+id/light_green_radio"
-                android:layout_width="wrap_content"
+
+                <RadioButton
+                    android:id="@+id/red_orange_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/color_radio_selector_red_orange"
+                    android:button="@null"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/light_green_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/color_radio_selector_light_green"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/violet_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/color_radio_selector_violet"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/baby_blue_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/color_radio_selector_baby_blue"
+                    android:button="@null" />
+
+                <RadioButton
+                    android:id="@+id/red_pink_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/color_radio_selector_red_pink"
+                    android:button="@null" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/title_edit_text_view"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/color_radio_selector_light_green"
-                android:button="@null" />
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:ems="10"
+                android:hint="Enter title..."
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/color_radio_group" />
 
-            <RadioButton
-                android:id="@+id/violet_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/color_radio_selector_violet"
-                android:button="@null" />
+            <EditText
+                android:id="@+id/body_edit_text_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Enter some content"
+                android:inputType="textMultiLine"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_edit_text_view" />
 
-            <RadioButton
-                android:id="@+id/baby_blue_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/color_radio_selector_baby_blue"
-                android:button="@null" />
-
-            <RadioButton
-                android:id="@+id/red_pink_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/color_radio_selector_red_pink"
-                android:button="@null" />
-
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/title_edit_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@null"
-            android:ems="10"
-            android:hint="Enter title..."
-            android:padding="3dp"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/color_radio_group" />
-
-        <EditText
-            android:id="@+id/body_edit_text_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Enter some content"
-            android:inputType="textMultiLine"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_edit_text_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save_note_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:clickable="true"
+            android:contentDescription="Update button"
+            android:focusable="true"
             android:src="@drawable/baseline_save_24"
-            app:backgroundTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:backgroundTint="@color/white" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </FrameLayout>

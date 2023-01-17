@@ -7,10 +7,9 @@ import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.model.NoteColor
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.QueryResult
+import com.survivalcoding.noteapp.presentation.ui_event.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +23,9 @@ class UpdateNoteViewModel
 
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState.asStateFlow()
+
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
     init {
         savedStateHandle.get<Int>("noteId")?.let { noteId ->
@@ -48,8 +50,12 @@ class UpdateNoteViewModel
     }
 
     suspend fun update(title: String, body: String, color: Long) {
-        println("update : ${noteState.value.id} $title $body $color")
-        val ql = noteUseCases.updateNoteUseCase(
+        if (title.isBlank()) {
+            _uiEvent.emit(UiEvent.ShowSnackBar("The title of the note can't be empty."))
+            return
+        }
+
+        noteUseCases.updateNoteUseCase(
             noteState.value.copy(
                 title = title,
                 body = body,
@@ -57,5 +63,6 @@ class UpdateNoteViewModel
                 date = System.currentTimeMillis()
             )
         )
+        _uiEvent.emit(UiEvent.SaveSuccess)
     }
 }

@@ -10,9 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentUpdateNoteBinding
 import com.survivalcoding.noteapp.domain.model.NoteColor
+import com.survivalcoding.noteapp.presentation.ui_event.UiEvent
 import com.survivalcoding.noteapp.presentation.viewmodel.UpdateNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -67,6 +69,21 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEvent.collectLatest {
+                    when (it) {
+                        UiEvent.SaveSuccess -> findNavController().popBackStack()
+                        is UiEvent.ShowSnackBar -> Snackbar.make(
+                            binding.updateCoordinatorLayout,
+                            it.msg,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
         binding.saveNoteButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.update(
@@ -74,7 +91,6 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
                     binding.bodyEditTextView.text.toString(),
                     resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
                 )
-                findNavController().popBackStack()
             }
         }
     }
