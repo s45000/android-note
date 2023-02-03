@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.viewmodel
+package com.survivalcoding.noteapp.presentation.note_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +7,6 @@ import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.OrderType
 import com.survivalcoding.noteapp.domain.util.QueryResult
-import com.survivalcoding.noteapp.presentation.ui_state.NoteListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*

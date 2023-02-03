@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.view
+package com.survivalcoding.noteapp.presentation.note_add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentAddNoteBinding
 import com.survivalcoding.noteapp.domain.model.NoteColor
-import com.survivalcoding.noteapp.presentation.ui_event.UiEvent
-import com.survivalcoding.noteapp.presentation.viewmodel.AddNoteViewModel
+import com.survivalcoding.noteapp.presentation.util.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -54,6 +53,16 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note) {
 
         binding.saveNoteButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
+
+//                // 문제 있음
+//                viewModel.addHasProblem(
+//                    binding.titleEditTextView.text.toString(),
+//                    binding.bodyEditTextView.text.toString(),
+//                    resIdToNoteColor(binding.colorRadioGroup.checkedRadioButtonId).rgb
+//                )
+//                findNavController().popBackStack()
+
+                // 문제 없음
                 viewModel.add(
                     binding.titleEditTextView.text.toString(),
                     binding.bodyEditTextView.text.toString(),

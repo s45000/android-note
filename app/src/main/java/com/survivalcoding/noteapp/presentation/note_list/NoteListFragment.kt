@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.view
+package com.survivalcoding.noteapp.presentation.note_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,9 +16,8 @@ import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentNoteListBinding
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.util.OrderType
-import com.survivalcoding.noteapp.presentation.adapter.NoteListAdapter
-import com.survivalcoding.noteapp.presentation.view.nav.NoteNav
-import com.survivalcoding.noteapp.presentation.viewmodel.NoteListViewModel
+import com.survivalcoding.noteapp.presentation.note_list.adapter.NoteListAdapter
+import com.survivalcoding.noteapp.presentation.util.nav.NoteNav
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -60,7 +59,7 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.noteListUiState.collectLatest {
-                    noteListAdapter.submitList(it.notes.toMutableList())
+                    noteListAdapter.submitList(it.notes)
                 }
             }
         }

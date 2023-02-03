@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#202020"
-    tools:context=".presentation.view.NoteListFragment">
+    tools:context=".presentation.note_list.NoteListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
@@ -18,9 +18,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:layoutDescription="@xml/fragment_note_list_scene"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layoutDescription="@xml/fragment_note_list_scene"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -122,12 +122,12 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:clickable="true"
+            android:contentDescription="add button"
             android:focusable="true"
             android:foregroundTint="@color/black"
             android:src="@drawable/baseline_add_24"
             app:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="add button"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

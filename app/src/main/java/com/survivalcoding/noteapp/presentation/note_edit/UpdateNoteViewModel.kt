@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.viewmodel
+package com.survivalcoding.noteapp.presentation.note_edit
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.model.NoteColor
 import com.survivalcoding.noteapp.domain.use_case.NoteUseCases
 import com.survivalcoding.noteapp.domain.util.QueryResult
-import com.survivalcoding.noteapp.presentation.ui_event.UiEvent
+import com.survivalcoding.noteapp.presentation.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

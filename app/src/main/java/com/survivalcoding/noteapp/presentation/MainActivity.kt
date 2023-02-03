@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.view
+package com.survivalcoding.noteapp.presentation
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -9,7 +9,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.ActivityMainBinding
-import com.survivalcoding.noteapp.presentation.view.nav.NoteNav
+import com.survivalcoding.noteapp.presentation.note_add.AddNoteFragment
+import com.survivalcoding.noteapp.presentation.note_edit.UpdateNoteFragment
+import com.survivalcoding.noteapp.presentation.note_list.NoteListFragment
+import com.survivalcoding.noteapp.presentation.util.nav.NoteNav
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.adapter
+package com.survivalcoding.noteapp.presentation.note_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

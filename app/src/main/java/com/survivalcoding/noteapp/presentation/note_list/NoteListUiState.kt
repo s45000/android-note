@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.ui_state
+package com.survivalcoding.noteapp.presentation.note_list
 
 import com.survivalcoding.noteapp.domain.model.Note
 import com.survivalcoding.noteapp.domain.util.OrderType

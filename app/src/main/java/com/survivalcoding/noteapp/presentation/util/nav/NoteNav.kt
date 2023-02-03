@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.view.nav
+package com.survivalcoding.noteapp.presentation.util.nav
 
 sealed class NoteNav(val route: String) {
     object NoteList : NoteNav("note_list")

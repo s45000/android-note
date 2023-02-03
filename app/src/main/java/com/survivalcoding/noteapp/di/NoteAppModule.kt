@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp
+package com.survivalcoding.noteapp.di
 
 import android.app.Application
 import androidx.room.Room

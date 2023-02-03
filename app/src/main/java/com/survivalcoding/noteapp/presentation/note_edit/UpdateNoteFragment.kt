@@ -1,4 +1,4 @@
-package com.survivalcoding.noteapp.presentation.view
+package com.survivalcoding.noteapp.presentation.note_edit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.survivalcoding.noteapp.R
 import com.survivalcoding.noteapp.databinding.FragmentUpdateNoteBinding
 import com.survivalcoding.noteapp.domain.model.NoteColor
-import com.survivalcoding.noteapp.presentation.ui_event.UiEvent
-import com.survivalcoding.noteapp.presentation.viewmodel.UpdateNoteViewModel
+import com.survivalcoding.noteapp.presentation.util.UiEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

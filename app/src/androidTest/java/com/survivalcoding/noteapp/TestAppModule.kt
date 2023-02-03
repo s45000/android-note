@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.survivalcoding.noteapp.data.data_source.NoteDatabase
 import com.survivalcoding.noteapp.data.repository.NoteRepositoryImpl
+import com.survivalcoding.noteapp.di.NoteAppModule
 import com.survivalcoding.noteapp.domain.repository.NoteRepository
 import com.survivalcoding.noteapp.domain.use_case.*
 import dagger.Module
